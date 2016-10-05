@@ -2,51 +2,6 @@ var amusia = {}
 
 amusia.tau = 6.283185307179586476925286766559
 
-// Some utils
-
-amusia.def = function(obj, func) {
-	func(obj)
-	return obj
-}
-
-amusia.kv = function(obj, func) {
-	for (var k in obj) {
-		if (obj.hasOwnProperty(k)) {
-			func(k, obj[k], obj)
-		}
-	}
-}
-
-amusia.mapObject = function(obj, func) {
-	return amusia.def({}, function(res) {
-		amusia.kv(obj, function(k, v) {
-			res[k] = func(k, v, obj)
-		})
-	})
-}
-
-amusia.repeat = function(n, func) {
-	for (var i = 0; i < n; ++i) {
-		func(i, n)
-	}
-}
-
-amusia.arraysEqual = function(a, b) {
-	var length = a.length
-	
-	if (length !== b.length) {
-		return false
-	}
-	
-	for (var i = 0; i < length; ++i) {
-		if (a[i] !== b[i]) {
-			return false
-		}
-	}
-	
-	return true
-}
-
 amusia.Wave = function(sampleRate, data) {
 	this.data = data || []
 	this.sampleRate = sampleRate ? sampleRate : 22050
