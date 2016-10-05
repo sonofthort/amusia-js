@@ -1,2 +1,4 @@
 # amusia-js
-Amusia music generator for JavaScript
+Amusia music generator for JavaScript.
+
+Uses RIFFWAVE.js
