@@ -61,7 +61,7 @@ amusia.Wave.prototype = {
 	toAudio: function() {
 		var audio = new Audio()
 		
-		audio.src = this.toDataURI
+		audio.src = this.toDataURI()
 		
 		return audio
 	},
