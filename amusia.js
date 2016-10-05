@@ -60,9 +60,7 @@ amusia.Wave.prototype = {
 	},
 	toAudio: function() {
 		var audio = new Audio()
-		
 		audio.src = this.toDataURI()
-		
 		return audio
 	},
 	serialize: function() {
@@ -82,9 +80,7 @@ amusia.Wave.deserialize = function(data) {
 
 amusia.Wave.mix = function(waves, finalize) {
 	var length = waves.length,
-		datas = waves.map(function(wave) {
-			return wave.data
-		}),
+		datas = waves.map(function(wave) {return wave.data}),
 		minSize = datas[0].length,
 		sampleRate = waves[0].sampleRate
 	
@@ -126,6 +122,12 @@ amusia.Wave.mix = function(waves, finalize) {
 	}
 	
 	return new amusia.Wave(sampleRate, data)
+}
+
+amusia.constant = function(value) {
+	return function() {
+		return value
+	}
 }
 
 amusia.equalTemperamentPlayer = function(notesPerOctave, offset) {
@@ -211,9 +213,7 @@ amusia.voices.flatBass = amusia.voice.xForm(function(x) {
 	return Math.sin(Math.cos(x * 2) + Math.sin(x * 3) + x)
 })
 
-amusia.voices.silent = function(f, t) {
-	return 0
-}
+amusia.voices.silent = amusia.constant(0)
 
 amusia.voices.violin = function(f, t) {
 	var y = 0,
@@ -260,22 +260,14 @@ amusia.memoize = function(func) {
 	var cache = {}
 	
 	return function() {
-		var args = [].slice.call(arguments)
-		
-		var key = args.join(', ')
-		
-		var res = cache[key]
+		var args = [].slice.call(arguments),
+			key = args.join(', '),
+			res = cache[key]
 		
 		if (res == null) {
 			cache[key] = res = func.apply(this, args)
 		}
 		
 		return res
-	}
-}
-
-amusia.constant = function(value) {
-	return function() {
-		return value
 	}
 }
