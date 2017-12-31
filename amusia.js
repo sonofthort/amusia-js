@@ -566,6 +566,7 @@ amusia.chords.minor7Add4 = amusia.chords.minor7.append(5).sort()
 amusia.chords.minorMajor7Add4 = amusia.chords.minorMajor7.append(5).sort()
 amusia.chords.minorMajor6 = amusia.chords.minor.append(9)
 amusia.chords.minor6 = amusia.chords.minor.append(8)
+amusia.chords.minorMajor6 = amusia.chords.minor.append(9)
 amusia.chords.minor9 = amusia.chords.minor7.append(14)
 amusia.chords.minorMajor9 = amusia.chords.minorMajor7.append(14)
 amusia.chords.minor11 = amusia.chords.minor7.append(17)
@@ -574,6 +575,11 @@ amusia.chords.minorMajor11 = amusia.chords.minorMajor7.append(17)
 amusia.chords.diminished7 = amusia.chords.diminished.append(9)
 amusia.chords.diminishedMinor7 = amusia.chords.diminished.append(10)
 amusia.chords.diminishedMajor7 = amusia.chords.diminished.append(11)
+amusia.chords.diminishedAdd2 = amusia.chords.diminished.append(1).sort()
+amusia.chords.diminished7Add2 = amusia.chords.diminished.append(9).append(1).sort()
+amusia.chords.diminishedMinor7Add2 = amusia.chords.diminished.append(10).append(1).sort()
+amusia.chords.diminishedMajor7Add2 = amusia.chords.diminished.append(11).append(1).sort()
+amusia.chords.diminished6 = amusia.chords.diminished.append(8)
 
 amusia.chords.augmented7 = amusia.chords.augmented.append(10)
 amusia.chords.augmentedMajor7 = amusia.chords.augmented.append(11)
@@ -682,20 +688,19 @@ amusia.SoundSpritePlayer = function(args) {
 
 amusia.SoundSpritePlayer.prototype = {
 	play: function(name) {
-		if (this.pool.length === 0) {
-			var audio = this.activeAudios.shift()
-			audio.pause()
-			this.pool.push(audio)
-			this.endTimes.shift()
-		}
-		
 		var sprite = this.sprites[name]
 		
 		if (sprite == null) {
 			return false
 		}
 		
-		var audio = this.pool.pop()
+		if (this.pool.length === 0) {
+			var audio = this.activeAudios.shift()
+			this.endTimes.shift()
+		} else {
+			var audio = this.pool.pop()
+		}
+		
 		audio.pause()
 		audio.currentTime = sprite.time
 		audio.play()
@@ -722,8 +727,14 @@ amusia.SoundSpritePlayer.prototype = {
 		}
 	},
 	stop: function() {
-		var time = this.time
-		this.update(Number.POSITIVE_INFINITY)
-		this.time = time
+		var activeAudios = this.activeAudios,
+			endTimes = this.endTimes,
+			pool = this.pool
+			
+		for (var audio = activeAudios.shift(); audio != null; audio = activeAudios.shift()) {
+			audio.pause()
+			pool.push(audio)
+			endTimes.pop()
+		}
 	}
 }
