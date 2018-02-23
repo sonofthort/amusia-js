@@ -14,6 +14,16 @@ amusia.util.kv = function(obj, func) {
 	return obj
 }
 
+amusia.util.generate = function(size, func) {
+	var res = new Array(size)
+	
+	for (var i = 0; i < size; ++i) {
+		res[i] = func(i)
+	}
+	
+	return res
+}
+
 amusia.Wave = function(args) {
 	this.sampleRate = args.sampleRate ? args.sampleRate : 22050
 	this.data = args.data ? args.data : []
@@ -671,7 +681,7 @@ amusia.SoundSpritePlayer = function(args) {
 		sprites = args.sprites ? args.sprites : {},
 		time = args.time ? args.time : 0
 	
-	this.pool = dc.generate(poolSize, function() {
+	this.pool = amusia.util.generate(poolSize, function() {
 		var audio = new Audio()
 		
 		audio.src = src
