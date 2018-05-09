@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!-- Copyright, Eric Thortsen, All rights reserved. -->
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<title>new-rpg</title>
+<script src="riffwave.js"></script>
+<script src="amusia.js"></script>
+<script src="song.js"></script>
+</head>
+<body oncontextmenu="return false" bgcolor="black">
+<div id="container" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"></div>
+<script>
+
+/*var wave = new amusia.Wave({
+	voice: amusia.voices.sine,
+	volume: amusia.constant(0.5),
+	pan: amusia.constant(0)
+})
+
+for (var i = 0; i < 64; ++i) {
+	wave.addNote(Math.pow(i, 1.5) + 60, 1 / 8)
+}
+
+var audio = wave.toAudio()
+
+amusia.playAudio(audio)*/
+
+var wave = amusia.song.create({
+	noteLength: 1 / 8,
+	volume: 0.5,
+	pan: 0,
+	transpose: 4,
+	octave: 3,
+	templates: {
+		chord: {
+			voices: [
+				{
+					notes: '__1__',
+					transpose: '__4__',
+					octave: 1,
+					instrument: 'mushy',
+					selector: {
+						type: 'curlicue',
+						k: 323
+					},
+					noteLength: 1,
+					pan: -0.5
+				},
+				{
+					notes: '__2__',
+					transpose: '__4__',
+					instrument: 'circular',
+					selector: {
+						type: 'curlicue',
+						k: 322
+					},
+					noteLength: 1,
+					pan: 0.5
+				},
+				{
+					notes: '__3__',
+					transpose: '__4__',
+					octave: -2,
+					instrument: 'sine',
+					selector: {
+						type: 'curlicue',
+						k: 323,
+						inverted: true,
+						offset: 1
+					},
+					noteLength: 1,
+					pan: 0
+				}
+			],
+			repeat: 8
+		},
+		section: {
+			group: '__chords__',
+			repeat: 128,
+			selector: {
+				type: 'curlicue',
+				k: '__k__'
+			}
+		}
+	},
+	song: [
+		{
+			group: [
+				['section', {
+					chords: [
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'e6', 'f6', 'g6', 'a7', 'b7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'e6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 0],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'e6', 'f6', 'g6', 'a7', 'b7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'e6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 5],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'e6', 'f6', 'g6', 'a7', 'b7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'e6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], -2],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'e6', 'f6', 'g6', 'a7', 'a#7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'e6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 7],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'eb6', 'f6', 'g6', 'a7', 'bb7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'eb6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 2],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'eb6', 'f6', 'g6', 'a7', 'bb7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'eb6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 7],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'eb6', 'e6', 'f6', 'f#6', 'g6', 'g#6', 'a7', 'bb7'],
+								  ['c4', 'c5', 'g5', 'c6', 'eb6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 0],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'eb6', 'f6', 'g6', 'g#6', 'bb7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'eb6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 9],
+					],
+					k: 44
+				}],
+				['section', {
+					chords: [
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'e6', 'f6', 'g6', 'a7', 'b7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'e6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 3],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'e6', 'f6', 'g6', 'a7', 'b7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'e6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 8],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'e6', 'f6', 'g6', 'a7', 'b7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'e6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 1],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'e6', 'f6', 'g6', 'a7', 'a#7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'e6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 10],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'eb6', 'f6', 'g6', 'a7', 'bb7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'eb6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 5],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'eb6', 'f6', 'g6', 'a7', 'bb7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'eb6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 10],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'eb6', 'e6', 'f6', 'f#6', 'g6', 'g#6', 'a7', 'bb7'],
+								  ['c4', 'c5', 'g5', 'c6', 'eb6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 3],
+								  
+						['chord', ['c4', 'c5', 'g5', 'c6', 'd6', 'eb6', 'f6', 'g6', 'g#6', 'bb7', 'c7'],
+								  ['c4', 'c5', 'g5', 'c6', 'eb6', 'f6', 'g6'],
+								  ['c4', 'c5', 'c6', 'g6', 'c7'], 12],
+					],
+					k: 444
+				}]
+			],
+			repeat: 2
+		}
+	]
+})
+
+var audio = wave.toAudio()
+
+amusia.playAudio(audio)
+
+</script>
+</body>
+</html>

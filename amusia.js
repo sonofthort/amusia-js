@@ -2,6 +2,10 @@ var amusia = {}
 
 amusia.tau = 6.283185307179586476925286766559
 
+amusia.curlicue = function(i, k) {return ((i * (i % amusia.tau)) % amusia.tau * k) % amusia.tau}
+amusia.curlicueSelect = function(n, i, k) {return Math.floor(n * amusia.curlicue(i, k) / amusia.tau)}
+amusia.curlicueSelectFrom = function(arr, i, k) {return arr[amusia.curlicueSelect(arr.length, i, k)]}
+
 amusia.util = {}
 
 amusia.util.kv = function(obj, func) {
@@ -14,6 +18,13 @@ amusia.util.kv = function(obj, func) {
 	return obj
 }
 
+amusia.util.isString = function(a) {return typeof a === 'string' || a instanceof String}
+amusia.util.isObject = function(a) {return a != null && typeof a === 'object'}
+amusia.util.isArray = function(a) {return Object.prototype.toString.call(a) === '[object Array]'}
+amusia.util.isNumber = function(a) {return typeof a === 'number'}
+amusia.util.isBoolean = function(a) {return typeof a === 'boolean'}
+amusia.util.isFunction = function(a) {return typeof a === 'function'}
+
 amusia.util.generate = function(size, func) {
 	var res = new Array(size)
 	
@@ -25,6 +36,7 @@ amusia.util.generate = function(size, func) {
 }
 
 amusia.Wave = function(args) {
+	args = args || {}
 	this.sampleRate = args.sampleRate ? args.sampleRate : 22050
 	this.data = args.data ? args.data : []
 	this.duration = args.duration ? args.duration : 0
@@ -237,6 +249,12 @@ amusia.Wave.concat = function(waves, bufferSeconds, finalize) {
 		sampleRate: sampleRate,
 		data: data,
 		duration: duration
+	})
+}
+
+amusia.playAudio = function(audio) {
+	audio.addEventListener('loadeddata', function() {
+		audio.play()
 	})
 }
 
